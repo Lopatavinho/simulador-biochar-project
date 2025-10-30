@@ -1,0 +1,116 @@
+<!-- views/simulador.ejs -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Biochar</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .simulacao-container {
+            width: 500px;
+            max-width: 95%; 
+            text-align: left;
+        }
+        .resultado-box {
+            border: 2px solid var(--cor-destaque);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 6px;
+            text-align: center;
+            background-color: #f7fffb; 
+        }
+        .resultado-valor {
+            font-size: 2em;
+            color: var(--cor-elementos);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .alert-sucesso {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .logout-link {
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            color: var(--cor-elementos);
+            text-decoration: none;
+        }
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container simulacao-container">
+        <h1>Simulador de Biochar</h1>
+        <h2>Parâmetros da Simulação</h2>
+
+        <% if (erro) { %>
+            <p style="color: red; text-align: center;"><%= erro %></p>
+        <% } %>
+
+        <% if (sucesso) { %>
+            <div class="alert-sucesso">
+                <%= sucesso %>
+            </div>
+        <% } %>
+
+        <form action="/simular" method="POST">
+            <!-- RF03: Escolher o tipo de solo -->
+            <label for="tipoSolo">Tipo de Solo</label>
+            <select id="tipoSolo" name="tipoSolo" required>
+                <option value="">Selecione...</option>
+                <!-- Mantém o valor selecionado após o POST -->
+                <option value="Arenoso" <%= resultado && resultado.tipoSolo === 'Arenoso' ? 'selected' : '' %>>Arenoso</option>
+                <option value="Misto" <%= resultado && resultado.tipoSolo === 'Misto' ? 'selected' : '' %>>Misto</option>
+                <option value="Argiloso" <%= resultado && resultado.tipoSolo === 'Argiloso' ? 'selected' : '' %>>Argiloso</option>
+            </select>
+
+            <!-- RF04: Ajustar a porcentagem de biochar -->
+            <label for="porcentagemBiochar">Porcentagem de Biochar Aplicada (%)</label>
+            <input type="number" id="porcentagemBiochar" name="porcentagemBiochar" min="0" max="15" step="0.5" 
+                   value="<%= resultado ? resultado.porcentagemBiochar : '5' %>" required>
+            <p style="font-size: 12px; color: #666; margin-: -10px;">Recomendado: 0% a 15%</p>
+
+            <button type="submit">Simular Retenção Hídrica</button>
+        </form>
+
+        <!-- Exibição do Resultado (RF05) -->
+        <% if (resultado && resultado.resultadoRetencao) { %>
+            <div class="resultado-box">
+                <h3>Resultado da Simulação</h3>
+                <p>Tipo de Solo: <strong><%= resultado.tipoSolo %></strong></p>
+                <p>Biochar Aplicado: <strong><%= resultado.porcentagemBiochar %>%</strong></p>
+                <hr>
+                <p>Capacidade de Retenção Hídrica Final:</p>
+                <p class="resultado-valor"><%= resultado.resultadoRetencao.toFixed(2) %>%</p>
+            </div>
+            
+            <!-- Botão para Salvar (RF08) -->
+            <form action="/salvar-simulacao" method="POST" style="margin-top: 10px;">
+                <!-- Campos ocultos para enviar os dados da simulação de volta -->
+                <input type="hidden" name="tipoSolo" value="<%= resultado.tipoSolo %>">
+                <input type="hidden" name="porcentagemBiochar" value="<%= resultado.porcentagemBiochar %>">
+                <input type="hidden" name="resultadoRetencao" value="<%= resultado.resultadoRetencao %>">
+                <button type="submit" style="background-color: #8B4513;">Salvar Minha Simulação</button>
+            </form>
+
+            <!-- Opção para "Ver mais simulações" (leva para a tela de Consulta - RF23) -->
+            <a href="/consulta" class="link-secundario" style="margin-top: 15px;">
+                Ir para a tela de Consulta
+            </a>
+
+        <% } else { %>
+            <p style="text-align: center; margin-top: 20px;">Insira os parâmetros e clique em "Simular" para ver o resultado.</p>
+        <% } %>
+    </div>
+    <a href="/logout" class="logout-link">Sair</a>
+</body>
+</html>

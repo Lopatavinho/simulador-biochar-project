@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Simulador Biochar</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simulador de Biochar</h1>
+        <h2>Novo Cadastro</h2>
+
+        <% if (erro) { %>
+            <p style="color: red; text-align: center;"><%= erro %></p>
+        <% } %>
+
+        <form action="/cadastro" method="POST">
+            <label for="nome" class="required-label">Nome</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email" class="required-label">E-mail</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="tipoUsuario" class="required-label">Tipo de Usuário</label>
+            <select id="tipoUsuario" name="tipoUsuario" required>
+                <option value="">Selecione...</option>
+                <option value="Cidadao">Cidadão</option>
+                <option value="Pesquisador">Pesquisador</option>
+            </select>
+
+            <label for="senha" class="required-label">Senha</label>
+            <input type="password" id="senha" name="senha" required>
+
+            <p style="font-size: 12px; color: #666; margin-t: -10px; margin-bottom: 15px;">
+                A senha deve conter letras maiúsculas, minúsculas e caracteres especiais. Ex: Senha@123
+            </p>
+
+            <label for="confirmarSenha" class="required-label">Confirmar Senha</label>
+            <input type="password" id="confirmarSenha" name="confirmarSenha" required>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <a href="/login" class="link-secundario">Já tenho conta. Fazer Login</a>
+    </div>
+</body>
+</html>

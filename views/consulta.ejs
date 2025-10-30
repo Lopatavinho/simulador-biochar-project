@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Simulações Salvas</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .consulta-container {
+            width: 800px;
+            max-width: 95%;
+            margin: 40px auto;
+            text-align: left;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: var(--cor-elementos);
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .acao-form {
+            display: inline;
+        }
+        .btn-excluir {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 0.9em;
+        }
+        .btn-excluir:hover {
+            background-color: #d32f2f;
+        }
+        .tabela-vazia {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="consulta-container">
+        <h1>Minhas Simulações Salvas</h1>
+        <p class="subtitulo">Aqui estão todas as simulações que você salvou na plataforma.</p>
+
+        <% if (erro) { %>
+            <p style="color: red; text-align: center; background-color: #fdd; padding: 10px; border-radius: 4px;"><%= erro %></p>
+        <% } %>
+
+        <% if (sucesso) { %>
+            <p style="color: green; text-align: center; background-color: #dfd; padding: 10px; border-radius: 4px;"><%= sucesso %></p>
+        <% } %>
+
+        <% if (simulacoes && simulacoes.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Solo</th>
+                        <th>Biochar (%)</th>
+                        <th>Retenção Hídrica Final (%)</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% simulacoes.forEach(simulacao => { %>
+                        <tr>
+                            <td><%= simulacao.id %></td>
+                            <td><%= simulacao.tipoSolo %></td>
+                            <td><%= simulacao.porcentagemBiochar.toFixed(1) %></td>
+                            <td><%= simulacao.resultadoRetencao.toFixed(2) %></td>
+                            <td><%= new Date(simulacao.createdAt).toLocaleDateString('pt-BR') %></td>
+                            <td>
+                                <!-- Botão de Exclusão (RF08) -->
+                                <form action="/simulacao/excluir/<%= simulacao.id %>" method="POST" class="acao-form" onsubmit="return confirm('Tem certeza que deseja excluir esta simulação?');">
+                                    <button type="submit" class="btn-excluir">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="tabela-vazia">Você ainda não salvou nenhuma simulação. Vá para o <a href="/simulador" class="link-secundario">Simulador</a> para começar!</p>
+        <% } %>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="/simulador" class="link-secundario">← Voltar ao Simulador</a>
+        </div>
+    </div>
+    <a href="/logout" style="position: absolute; top: 10px; right: 10px;">Sair</a>
+</body>
+</html>

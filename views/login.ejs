@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Simulador Biochar</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .acessibilidade-icons {
+            position: fixed;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .acessibilidade-icons img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+        }
+        .required-label::after {
+            content: ' *';
+            color: red; /* RF09 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simulador de Biochar</h1>
+        <h2>Acesso ao Sistema</h2>
+
+        <% if (erro) { %>
+            <p style="color: red; text-align: center;"><%= erro %></p>
+        <% } %>
+
+        <form action="/login" method="POST">
+            <label for="email" class="required-label">E-mail</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="senha" class="required-label">Senha</label>
+            <input type="password" id="senha" name="senha" required>
+
+            <div>
+                <input type="checkbox" id="lembrar" name="lembrar">
+                <label for="lembrar">Lembrar de mim</label>
+            </div>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <a href="#" class="link-secundario" style="background-color: #007bff; color: white; padding: 10px; border-radius: 4px; margin-top: 15px;">
+            Entrar com gov.br
+        </a>
+
+        <a href="#" class="link-secundario">Esqueci minha senha</a>
+        <a href="/cadastro" class="link-secundario">Ainda não tenho conta. Cadastre-se!</a>
+
+    </div>
+
+    <div class="acessibilidade-icons">
+        <img src="https://via.placeholder.com/30/8B4513/FFFFFF?text=LS" alt="Linguagem de Sinais" title="Libras">
+        <img src="https://via.placeholder.com/30/8B4513/FFFFFF?text=DA" alt="Deficiência Auditiva" title="Deficiência Auditiva">
+        <img src="https://via.placeholder.com/30/8B4513/FFFFFF?text=DV" alt="Deficiência Visual" title="Deficiência Visual">
+    </div>
+    
+    <div style="position: fixed; right: 10px; bottom: 10px;">
+        <img src="https://via.placeholder.com/40/3CB371/FFFFFF?text=CHAT" alt="Chat de Suporte" title="Chat de Suporte" style="border-radius: 50%; cursor: pointer;">
+    </div>
+</body>
+</html>

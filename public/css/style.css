@@ -1,0 +1,260 @@
+/* Bloco A: Variáveis, Reset e Estrutura Base (60-30-10) */
+:root {
+    /* 60% Fundo: Fundo Limpo e Neutro (Acessibilidade) */
+    --cor-fundo-principal: #f4f6f9; 
+    
+    /* 30% Elementos: Cor Principal e Textos de Contraste */
+    --cor-elementos: #2c5f2d; /* Verde Floresta */
+    --cor-elementos-claro: #4CAF50; /* Verde mais vibrante para destaques */
+    --cor-texto: #333;
+
+    /* 10% Destaque: Botões Principais e Alertas */
+    --cor-destaque: #8B4513; /* Marrom para Terra/Biochar */
+    --cor-destaque-hover: #A0522D;
+    --cor-erro: #D32F2F;
+    --cor-sucesso: var(--cor-elementos-claro);
+    
+    --sombra-card: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--cor-fundo-principal);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinhamento ao topo para melhor visualização em telas grandes */
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Estrutura de Container Central */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--sombra-card);
+    width: 100%;
+    max-width: 550px;
+    margin: 20px auto;
+}
+
+/* Bloco B: Tipografia, Formulários e Botões (RF12) */
+
+h1 {
+    color: var(--cor-elementos);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+h2 {
+    color: var(--cor-destaque);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--cor-elementos);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    width: 100%;
+    /* Garante contraste */
+    background-color: #fcfcfc;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--cor-elementos-claro);
+    box-shadow: 0 0 5px rgba(var(--cor-elementos-claro), 0.5);
+    outline: none;
+}
+
+button {
+    background-color: var(--cor-destaque);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 25px;
+    transition: background-color 0.2s ease;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: var(--cor-destaque-hover);
+}
+
+.link-secundario {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: var(--cor-elementos);
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: color 0.2s ease;
+}
+
+.link-secundario:hover {
+    color: var(--cor-elementos-claro);
+    text-decoration: underline;
+}
+
+/* Mensagens de Erro/Sucesso */
+.mensagem {
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.erro {
+    background-color: #ffebee;
+    color: var(--cor-erro);
+    border: 1px solid var(--cor-erro);
+}
+
+.sucesso {
+    background-color: #e8f5e9;
+    color: var(--cor-elementos);
+    border: 1px solid var(--cor-elementos);
+}
+
+/* Bloco C: Tabela e Responsividade (RNF01) */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.95em;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: var(--cor-elementos);
+    color: white;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+.gov-icon {
+    color: var(--cor-elementos-claro); /* Verde do gov.br */
+    margin-left: 5px;
+}
+
+/* Layout do Simulador */
+.simulacao-container {
+    text-align: left;
+}
+.resultado-box {
+    border: 2px solid var(--cor-destaque);
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 6px;
+    text-align: center;
+    background-color: #fffaf0; /* Fundo mais suave */
+}
+.resultado-valor {
+    font-size: 2.2em;
+    color: var(--cor-elementos);
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* Responsividade (RNF01) */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 15px;
+        margin: 10px auto;
+        border-radius: 0; /* Opção para tela cheia em mobile */
+        box-shadow: none;
+        max-width: 100%;
+    }
+    
+    /* Tornar a tabela responsiva */
+    table, thead, tbody, th, td, tr { 
+        display: block; 
+    }
+    
+    thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    tr { 
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        border-radius: 6px;
+    }
+    
+    td { 
+        border: none;
+        border-bottom: 1px solid #eee; 
+        position: relative;
+        padding-left: 50%; /* Espaço para o label */
+        text-align: right;
+    }
+    
+    /* Criar labels virtuais */
+    td::before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: var(--cor-elementos);
+    }
+    
+    /* Configurar labels virtuais (importante para acessibilidade mobile) */
+    td:nth-of-type(1)::before { content: "ID"; }
+    td:nth-of-type(2)::before { content: "Solo"; }
+    td:nth-of-type(3)::before { content: "Biochar"; }
+    td:nth-of-type(4)::before { content: "Retenção"; }
+    td:nth-of-type(5)::before { content: "Data"; }
+    td:nth-of-type(6)::before { content: "Ações"; }
+    
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
